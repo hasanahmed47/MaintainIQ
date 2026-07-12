@@ -103,3 +103,41 @@
     gap: 14px;
   }
 }
+
+
+@media (max-width: 768px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+
+  .page-container {
+    padding: 16px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .summary-card {
+    padding: 14px;
+  }
+
+  .summary-value {
+    font-size: 1.4rem;
+  }
+
+  .search-input {
+    max-width: 100%;
+  }
+
+  .asset-grid, .issue-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

@@ -272,3 +272,31 @@
   color: var(--color-text);
   margin-bottom: 12px;
 }
+
+@media (max-width: 480px) {
+  .public-page {
+    padding: 24px 14px;
+  }
+
+  .public-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .asset-info-grid {
+    grid-template-columns: 1fr;
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .report-form-card {
+    padding: 18px;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions button {
+    width: 100%;
+  }
+}
