@@ -167,6 +167,11 @@
   .details-grid {
     grid-template-columns: 1fr;
   }
+
+  .details-side {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 600px) {
