@@ -18,6 +18,11 @@ const AssetDetails = () => {
   const [assigningIssue, setAssigningIssue] = useState(null);
 
   const loadData = async () => {
+    if (!id || id === 'undefined') {
+      navigate('/admin');
+      return;
+    }
+
     setLoading(true);
     try {
       const [assetRes, issuesRes, historyRes, techRes] = await Promise.all([

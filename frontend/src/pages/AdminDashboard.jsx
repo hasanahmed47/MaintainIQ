@@ -112,8 +112,17 @@ const AdminDashboard = () => {
               ) : (
                 <div className="issue-grid">
                   {issues.map((issue, i) => (
-                    <IssueCard key={issue._id} issue={issue} index={i} onClick={() => navigate(`/admin/asset/${issue.asset?._id}`)} />
-                  ))}
+     <IssueCard
+    key={issue._id}
+    issue={issue}
+    index={i}
+    onClick={() => {
+      if (issue.asset?._id) {
+        navigate(`/admin/asset/${issue.asset._id}`);
+      }
+    }}
+  />
+))}
                 </div>
               )}
             </>
