@@ -1,16 +1,26 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import './QRDisplay.css';
 
 const QRDisplay = ({ asset }) => {
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 2000);
+  };
+
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = asset.qrCodeUrl;
     link.download = `${asset.assetCode}-qr.png`;
     link.click();
+    showToast('QR code downloaded ✓');
   };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(asset.publicUrl);
+    showToast('Link copied to clipboard ✓');
   };
 
   return (
@@ -37,6 +47,19 @@ const QRDisplay = ({ asset }) => {
           Open Public Page
         </a>
       </div>
+
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            className="qr-toast"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+          >
+            {toast}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
