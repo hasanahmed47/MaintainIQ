@@ -1,4 +1,4 @@
-# MaintainIQ — AI-Powered QR Maintenance & Asset History Platform
+# MaintainIQ _ AI-Powered QR Maintenance & Asset History Platform
 
 Track A: Advanced Full-Stack + GenAI submission. Node/Express/MongoDB backend, React/Vite frontend, Redux Toolkit, Framer Motion, OpenAI-powered AI Issue Triage.
 

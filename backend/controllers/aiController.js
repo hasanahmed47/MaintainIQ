@@ -1,16 +1,14 @@
 const OpenAI = require('openai');
-
+// open AI ki key use kri hai complain ai se generate krwane ke liye
 const openai = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   : null;
-
-// @desc    AI Issue Triage — converts a natural language complaint into structured data
-// @route   POST /api/ai/triage
 // @access  Private (any authenticated role) or used from the public reporting flow via a
 //          protected server-side call — the API key never touches the frontend.
 const triageIssue = async (req, res) => {
   const { complaint, assetName, assetCategory, assetCondition, assetLocation } = req.body;
 
+  
   if (!complaint || complaint.trim().length < 5) {
     return res.status(400).json({ message: 'Please provide a more detailed complaint description' });
   }

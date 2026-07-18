@@ -63,6 +63,17 @@ input, select, textarea {
   font-family: var(--font-body);
 }
 
+/* Native <select> dropdown options default to white/black in the browser's
+   own popup — this is the closest cross-browser control we have over that. */
+select {
+  color-scheme: dark;
+}
+
+select option {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

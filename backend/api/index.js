@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.send('MaintainIQ API is running...');
 });
-
+// yeh routes apke frontend mein use hou ghy
 app.use('/api/auth', require('../routes/authRoutes'));
 app.use('/api/assets', require('../routes/assetRoutes'));
 app.use('/api/issues', require('../routes/issueRoutes'));
