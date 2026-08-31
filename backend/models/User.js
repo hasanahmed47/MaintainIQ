@@ -15,7 +15,20 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: function () {
+        // Google accounts are created without a password
+        return !this.googleId;
+      },
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+      default: null,
+    },
+    avatar: {
+      type: String,
+      default: null,
     },
     role: {
       type: String,
@@ -27,7 +40,7 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+  if (!this.password || !this.isModified('password')) {
     return next();
   }
   const salt = await bcrypt.genSalt(10);
@@ -36,6 +49,10 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
+  if (!this.password) {
+    // Account exists via Google Sign-In only
+    return false;
+  }
   return await bcrypt.compare(enteredPassword, this.password);
 };
 

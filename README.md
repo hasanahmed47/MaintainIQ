@@ -23,10 +23,30 @@ cd frontend
 npm install
 npm run dev              # starts on http://localhost:5173
 ```
+Optional: `cp .env.example .env` to set `VITE_API_URL` (defaults to `http://localhost:5000/api`) and `VITE_GOOGLE_CLIENT_ID`.
 
 ## Demo Credentials
 - Admin: admin@maintainiq.com / admin123
 - Technician: tech@maintainiq.com / tech123
+
+## Auth Features
+- **Signup page** (`/signup`) — name, email, password + confirm, with an optional *admin access code* field.
+- **Google Sign-In** — "Continue with Google" on both Login and Signup (official Google Identity Services button).
+- **Persistent sessions** — login is kept in `localStorage`, so closing the tab/browser and reopening the app drops you straight into your dashboard (the stored JWT is validated against `/api/auth/me` on load and cleared cleanly when expired).
+- **Role security on signup** — new users join as technicians; the `admin` role requires the `ADMIN_SIGNUP_CODE` from the server `.env` (the backend rejects self-declared admins with 403).
+
+### Enabling Google Sign-In (optional, ~5 minutes)
+1. Go to [Google Cloud Console → Credentials](https://console.cloud.google.com/apis/credentials) → *Create Credentials* → **OAuth Client ID** (type: *Web application*).
+2. Add your frontend origins to *Authorized JavaScript origins* (e.g. `http://localhost:5173` and your deployed URL).
+3. Put the same Client ID in both env files:
+   - `backend/.env` → `GOOGLE_CLIENT_ID=...`
+   - `frontend/.env` → `VITE_GOOGLE_CLIENT_ID=...`
+4. Restart the backend and frontend. The Google button appears automatically.
+
+Without a Client ID the app works exactly as before — the button is simply hidden, and `POST /api/auth/google` answers `501 Not Implemented` (graceful fallback).
+
+Google accounts are verified server-side (audience + issuer + email verification against Google's tokeninfo endpoint), then found-or-created by email/Google ID — no duplicate accounts, and existing email accounts get linked automatically.
+
 
 ## Core Workflow Demonstrated
 1. Admin registers an asset → unique asset code + QR code auto-generated.
@@ -62,8 +82,8 @@ backend/
 
 frontend/
   src/
-    pages/       → Login, AdminDashboard, TechnicianDashboard, PublicAssetPage, AssetDetails
-    components/  → assets/, issues/, maintenance/, layout/
+    pages/       → Login, Signup, AdminDashboard, TechnicianDashboard, PublicAssetPage, AssetDetails
+    components/  → assets/, issues/, maintenance/, layout/, auth/
     redux/       → auth, assets, issues slices
     services/    → axios instance
     routes/      → PrivateRoute guard
