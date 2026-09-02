@@ -29,6 +29,13 @@ const seedData = async () => {
       role: 'technician',
     });
 
+    const supervisor = await User.create({
+      name: 'Sara Supervisor',
+      email: 'supervisor@maintainiq.com',
+      password: 'super123',
+      role: 'supervisor',
+    });
+
     const assetsData = [
       { name: 'Classroom Projector 01', category: 'Electronics', location: 'Block A - Room 101', condition: 'Good' },
       { name: 'AC Unit - Lecture Hall', category: 'HVAC', location: 'Block B - Hall 3', condition: 'Fair' },
@@ -47,6 +54,7 @@ const seedData = async () => {
     console.log('-----------------------------------');
     console.log('Admin login:      admin@maintainiq.com / admin123');
     console.log('Technician login: tech@maintainiq.com / tech123');
+    console.log('Supervisor login: supervisor@maintainiq.com / super123');
     console.log('-----------------------------------');
     process.exit();
   } catch (error) {

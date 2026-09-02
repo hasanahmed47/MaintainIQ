@@ -1,0 +1,30 @@
+.google-auth-block {
+  margin-top: 22px;
+}
+
+.google-auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.google-auth-divider::before,
+.google-auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.google-auth-divider span {
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.google-auth-btn-wrapper {
+  border-radius: 100px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}

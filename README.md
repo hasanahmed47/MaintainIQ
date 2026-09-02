@@ -1,4 +1,4 @@
-# MaintainIQ _ AI-Powered QR Maintenance & Asset History Platform
+# MaintainIQ — AI-Powered QR Maintenance & Asset History Platform
 
 Track A: Advanced Full-Stack + GenAI submission. Node/Express/MongoDB backend, React/Vite frontend, Redux Toolkit, Framer Motion, OpenAI-powered AI Issue Triage.
 
@@ -27,6 +27,13 @@ npm run dev              # starts on http://localhost:5173
 ## Demo Credentials
 - Admin: admin@maintainiq.com / admin123
 - Technician: tech@maintainiq.com / tech123
+- Supervisor: supervisor@maintainiq.com / super123
+
+## Recently Added
+- **Overview tab (Admin)**: donut chart of assets by status + bar chart of issues by priority, plus recent-activity lists.
+- **Team page (Admin only)**: view every team member and add new technicians/supervisors/admins from the UI (`/api/auth/users`, `/api/auth/register`).
+- **Supervisor role**: a third account type with its own dashboard — views all assets/issues read-only, and can reopen Resolved/Closed issues for another look (matches the hackathon brief's optional Supervisor role).
+- **AI error visibility**: if the AI Issue Triage request fails or the OpenAI key isn't configured, the public reporting page now shows a clear on-screen message instead of failing silently — the form still lets the reporter fill fields in manually either way.
 
 ## Core Workflow Demonstrated
 1. Admin registers an asset → unique asset code + QR code auto-generated.

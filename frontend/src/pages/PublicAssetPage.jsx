@@ -30,6 +30,7 @@ const PublicAssetPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(null);
   const [submitError, setSubmitError] = useState(null);
+  const [aiError, setAiError] = useState(null);
 
   useEffect(() => {
     const fetchAsset = async () => {
@@ -49,6 +50,7 @@ const PublicAssetPage = () => {
   const handleGetAiSuggestion = async () => {
     if (!complaint || complaint.trim().length < 5) return;
     setAiLoading(true);
+    setAiError(null);
     try {
       const { data } = await api.post('/ai/triage', {
         complaint,
@@ -63,8 +65,20 @@ const PublicAssetPage = () => {
         category: data.suggestedCategory || '',
         priority: data.suggestedPriority || 'Medium',
       });
+      if (data.aiAvailable === false) {
+        setAiError('The AI service is not configured on the server right now — you can still fill in the fields below manually.');
+      }
     } catch (error) {
-      // graceful — user can still submit manually
+      // The AI endpoint itself should never throw (aiController always returns 200 with a
+      // fallback), so landing here means the request never reached it — bad URL, network
+      // issue, or the backend function crashed. Show it instead of failing silently, and
+      // still let the person fill in the fields by hand so reporting isn't blocked.
+      setAiError(
+        error.response?.data?.message ||
+        'Could not reach the AI suggestion service. You can still fill in the fields below manually.'
+      );
+      setAiSuggestion({ aiAvailable: false, possibleCauses: [], initialChecks: [] });
+      setEditedValues({ title: complaint.slice(0, 60), category: 'General', priority: 'Medium' });
     } finally {
       setAiLoading(false);
     }
@@ -197,6 +211,12 @@ const PublicAssetPage = () => {
                   <button type="button" className="ai-generate-btn" onClick={handleGetAiSuggestion} disabled={aiLoading || complaint.trim().length < 5}>
                     {aiLoading ? 'Analyzing complaint...' : '✦ Get AI Suggestion'}
                   </button>
+                )}
+
+                {aiError && (
+                  <div className="ai-error-banner">
+                    {aiError}
+                  </div>
                 )}
 
                 {aiSuggestion && (

@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { logout } from '../../redux/authSlice';
 import './Sidebar.css';
 
 const Sidebar = ({ navItems }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const { userInfo } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
@@ -28,15 +27,26 @@ const Sidebar = ({ navItems }) => {
       </div>
 
       <nav className="sidebar-nav">
-        {navItems.map((item) => (
-          <button
-            key={item.key}
-            className={`nav-item ${location.hash === item.key || item.active ? 'active' : ''}`}
-            onClick={item.onClick}
-          >
-            {item.label}
-          </button>
-        ))}
+        {navItems.map((item) =>
+          item.path ? (
+            <NavLink
+              key={item.key}
+              to={item.path}
+              end={item.end}
+              className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            >
+              {item.label}
+            </NavLink>
+          ) : (
+            <button
+              key={item.key}
+              className={`nav-item ${item.active ? 'active' : ''}`}
+              onClick={item.onClick}
+            >
+              {item.label}
+            </button>
+          )
+        )}
       </nav>
 
       <div className="sidebar-footer">

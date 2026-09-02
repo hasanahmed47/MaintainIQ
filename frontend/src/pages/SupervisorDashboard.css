@@ -1,0 +1,25 @@
+.review-note {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+
+.review-issue-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reopen-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-warning);
+  padding: 9px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.reopen-btn:hover {
+  border-color: var(--color-warning);
+}
